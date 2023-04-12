@@ -1,9 +1,9 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function ($) {
 	//variables
 	var hijacking= $('body').data('hijacking'),
 		animationType = $('body').data('animation'),
 		delta = 0,
-        scrollThreshold = 5,
+        scrollThreshold = 1,
         actual = 1,
         animating = false;
     
@@ -33,7 +33,8 @@ jQuery(document).ready(function($){
     		//bind the animation to the window scroll event, arrows click and keyboard
 			if( hijacking == 'on' ) {
 				initHijacking();
-				$(window).on('DOMMouseScroll mousewheel', scrollHijacking);
+				window.addEventListener('mousewheel', scrollHijacking, {passive: false});
+				window.addEventListener('DOMMouseScroll', scrollHijacking, {passive: false});
 			} else {
 				scrollAnimation();
 				$(window).on('scroll', scrollAnimation);
@@ -118,9 +119,9 @@ jQuery(document).ready(function($){
         bottomSection.children('div').velocity(animationBottom, 0);
 	}
 
-	function scrollHijacking (event) {
+	function scrollHijacking(event) {
 		// on mouse scroll - check if animate section
-        if (event.originalEvent.detail < 0 || event.originalEvent.wheelDelta > 0) { 
+        if (event.detail < 0 || event.wheelDelta > 0) { 
             delta--;
             ( Math.abs(delta) >= scrollThreshold) && prevSection();
         } else {

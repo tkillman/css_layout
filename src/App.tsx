@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react';
-import './assets/css/velocity.css';
-import { addScript } from './utils/pathUtil';
+import useScript from './hooks/useScript';
 
 function App() {
     const [loading, setLoading] = useState<boolean>(true);
 
+    const filePath = import.meta.env.MODE === 'production' ? '/assets/js' : '/src/assets/js';
+
+    const { loading: loadingJquery } = useScript(`${filePath}/jquery-2.1.4.js`);
+    //const { loading: loadingModernizr } = useScript(`${filePath}/modernizr.js`, loadingJquery);
+    const { loading: loadingVelocity } = useScript(`${filePath}/velocity.min.js`);
+    const { loading: loadingVelocityUi } = useScript(`${filePath}/velocity.ui.min.js`, loadingVelocity);
+    const { loading: loadingMain } = useScript(`${filePath}/main.js`, loadingVelocityUi);
+
     useEffect(() => {
-        const filePath = import.meta.env.MODE === 'production' ? '/assets/js' : '/src/assets/js';
-
-        setLoading(true);
-
-        addScript(`${filePath}/jquery-2.1.4.js`);
-        addScript(`${filePath}/modernizr.js`);
-        addScript(`${filePath}/velocity.min.js`);
-        addScript(`${filePath}/velocity.ui.min.js`);
-        addScript(`${filePath}/main.js`);
-
-        setLoading(false);
-    }, []);
+        setLoading(loadingJquery && loadingVelocity && loadingVelocityUi && loadingMain);
+    }, [loadingJquery, loadingVelocity, loadingVelocityUi, loadingMain]);
 
     return (
         <>

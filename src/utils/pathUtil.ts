@@ -9,30 +9,20 @@ export const getSourcePathUrl = (fileFullPath: string) => {
 };
 
 /**
- * 스크립트가 존재하는지 확인
- *
- * @param fileFullPath 파일 위치
- * @returns boolean
- */
-export const isScriptExist = (fileFullPath: string) => {
-    return !!document.querySelector(`script[src="${getSourcePathUrl(fileFullPath)}"]`);
-};
-
-/**
  * 스크립트가 존재하지 않으면 추가
  *
  * @param fileFullPath 파일 위치
  */
 export const addScript = (fileFullPath: string) => {
-    const isExist = isScriptExist(fileFullPath);
+    const sourcePathUrl = getSourcePathUrl(fileFullPath);
+    let script = document.querySelector(`script[src="${sourcePathUrl}"]`);
 
-    if (isExist) {
-        return;
+    if (!script) {
+        script = document.createElement('script');
+        script.setAttribute('src', sourcePathUrl);
+        script.setAttribute('defer', 'true');
     }
 
-    const sourcePathUrl = getSourcePathUrl(fileFullPath);
-    const s = document.createElement('script');
-    s.setAttribute('src', sourcePathUrl);
-    s.setAttribute('defer', 'true');
-    document.body.appendChild(s);
+    document.head.appendChild(script);
+    return script;
 };
