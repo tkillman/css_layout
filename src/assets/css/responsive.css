@@ -1,0 +1,15 @@
+@media (max-width : 768px) {
+    .cd-section {
+        height: auto;
+    }
+
+    .cd-section > div{
+        height: auto;
+    }
+
+    .content {
+        position: static;
+        width: 100%;
+        height: 100%;
+    }
+}

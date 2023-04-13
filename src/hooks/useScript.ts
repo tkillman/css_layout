@@ -13,6 +13,12 @@ const useScript = (fileFullPath: string, isPrevLoading: boolean = false) => {
         if (isPrevLoading) {
             return;
         }
+
+        //이미 로딩 됐다면 skip
+        if (!loading) {
+            return;
+        }
+
         const targetScript = addScript(fileFullPath);
 
         targetScript?.addEventListener('load', handleLoad);

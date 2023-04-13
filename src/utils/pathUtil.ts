@@ -20,7 +20,7 @@ export const addScript = (fileFullPath: string) => {
     if (!script) {
         script = document.createElement('script');
         script.setAttribute('src', sourcePathUrl);
-        script.setAttribute('defer', 'true');
+        script.setAttribute('async', 'true');
     }
 
     document.head.appendChild(script);
