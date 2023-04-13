@@ -21,6 +21,11 @@ const Header = () => {
                     </div>
                     <div className='slogan'>We design places, not projects.</div>
                 </div>
+                <div className='trigger'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </header>
     );
